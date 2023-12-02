@@ -2,6 +2,9 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.2.0'
     id 'io.spring.dependency-management' version '1.1.4'
+
+    //putest
+    id 'info.solidsoft.pitest' version '1.7.4'
 }
 
 group = 'com.gildedrose'
@@ -18,9 +21,24 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // approvaltests
     testImplementation 'com.approvaltests:approvaltests:18.5.0'
+
+    // pitest
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+pitest {
+    testPlugin = 'junit5'
+    targetClasses = ['com.gildedrose.*']
+    timestampedReports = false
+    outputFormats = ['XML', 'HTML']
+    targetTests = ['com.gildedrose.Gilded*']
+    junit5PluginVersion = '0.15'
 }

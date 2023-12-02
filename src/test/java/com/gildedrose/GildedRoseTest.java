@@ -9,9 +9,9 @@ class GildedRoseTest {
 
     @Test
     void updateQuality_list_approvals_after() {
-        String[] name = {"foo"};
-        Integer[] sellIn = {0};
-        Integer[] quality = {0};
+        String[] name = {"foo", "Aged Brie", "Backstage passes to a TAFKAL80ETC concert", "Sulfuras, Hand of Ragnaros"};
+        Integer[] sellIn = {-1, 0, 11};
+        Integer[] quality = {0, 1, 49, 50};
 
         CombinationApprovals.verifyAllCombinations(this::doUpdateQuality, name, sellIn, quality);
     }

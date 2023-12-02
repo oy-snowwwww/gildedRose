@@ -80,6 +80,37 @@ approval test 의존성 추가
   - https://approvaltests.com/
   결과를 스냅샷으로 만들고, 변경되지 않았음을 검증하여 단위 테스트에서 검증을 단순화함.
 
+## Mutation Tesing
+
+- 고의로 버그를 유발(프로덕션 코드를 약간 수정해서) 하여 테스트가 실패하는지 확인하여 테스트의 완정성을 검증하는 기법
+  - 이렇게 프로덕션 코드를 약간 변경하는 테스트를 돌연변이 테스트**Mutation Test**라고 함
+  - 100% 커버리지를 가지고 있더라도, 테스트를 실패하지 않고 성공하는 경우가 있음
+  - 돌연변이 테스트를 통과하지 못하는 테스트를 찾아내는 것이 목적
+- PIT 를 이용해서 수행
+  - https://pitest.org/
+  - PIT 는 런타임에 프로덕션 코드를 변경하는 방식으로 돌연변이 테스트를 수행
+  - 살아남은 돌연변이 테스트가 있다면 defect 을 완전히 방지하지 못한다는 것을 의미
+
+```text
+// build.gradle 에 PIT 의존성 추가
+    id 'info.solidsoft.pitest' version '1.7.4'
+    
+    
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
+
+
+pitest {
+    testPlugin = 'junit5'
+    targetClasses = ['com.gildedrose.*']
+    timestampedReports = false
+    outputFormats = ['XML', 'HTML']
+    targetTests = ['com.gildedrose.Gilded*']
+    junit5PluginVersion = '0.15'
+}
+```
+
+  
 
 
 
